@@ -11,6 +11,7 @@ public interface IOrderService
     Task<OrderResponseDto?> GetOrderByIdAsync(int id);
     Task<OrderResponseDto> CreateOrderAsync(CreateOrderDto createOrderDto);
     Task<OrderResponseDto?> UpdateOrderStatusAsync(int id, UpdateOrderDto updateOrderDto);
+    Task<bool> DeleteOrderAsync(int id);
 }
 
 // Service implementation for order business logic
@@ -54,6 +55,11 @@ public class OrderService : IOrderService
         var order = new Order { Status = updateOrderDto.Status };
         var updatedOrder = await _repository.UpdateOrderAsync(id, order);
         return updatedOrder != null ? MapToResponseDto(updatedOrder) : null;
+    }
+
+    public async Task<bool> DeleteOrderAsync(int id)
+    {
+        return await _repository.DeleteOrderAsync(id);
     }
 
     private static OrderResponseDto MapToResponseDto(Order order)

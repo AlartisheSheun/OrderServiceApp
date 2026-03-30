@@ -20,9 +20,9 @@ public class OrdersController : ControllerBase
         _logger = logger;
     }
 
-    
+
     // Get all orders
-    [HttpGet("Retrieve all orders")]
+    [HttpGet("Retrieve/all/orders")]
     public async Task<ActionResult<IEnumerable<OrderResponseDto>>> GetOrders()
     {
         try
@@ -37,9 +37,9 @@ public class OrdersController : ControllerBase
         }
     }
 
-    
+
     // Get order by ID
-    [HttpGet("Retrieve order by {id}")]
+    [HttpGet("Retrieve/order/by/{id}")]
     public async Task<ActionResult<OrderResponseDto>> GetOrder(int id)
     {
         try
@@ -60,9 +60,9 @@ public class OrdersController : ControllerBase
         }
     }
 
-    
+
     // Create a new order
-    [HttpPost("Create new order")]
+    [HttpPost("Create/new/order")]
     public async Task<ActionResult<OrderResponseDto>> CreateOrder([FromBody] CreateOrderDto createOrderDto)
     {
         try
@@ -77,9 +77,9 @@ public class OrdersController : ControllerBase
         }
     }
 
-    
+
     // Update order status
-    [HttpPut("Update order by {id}")]
+    [HttpPut("Update/order/status/by/{id}")]
     public async Task<ActionResult<OrderResponseDto>> UpdateOrder(int id, [FromBody] UpdateOrderDto updateOrderDto)
     {
         try
@@ -97,6 +97,28 @@ public class OrdersController : ControllerBase
         {
             _logger.LogError(ex, "Error updating order with ID {OrderId}", id);
             return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while updating the order");
+        }
+    }
+
+    // Delete order by ID
+    [HttpDelete("Delete/order/by/{id}")]
+    public async Task<ActionResult> DeleteOrder(int id)
+    {
+        try
+        {
+            var result = await _orderService.DeleteOrderAsync(id);
+            if (!result)
+            {
+                _logger.LogWarning("Order with ID {OrderId} not found for deletion", id);
+                return NotFound(new { message = "Order not found" });
+            }
+
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error deleting order with ID {OrderId}", id);
+            return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while deleting the order");
         }
     }
 }
