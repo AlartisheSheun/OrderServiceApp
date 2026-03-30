@@ -1,0 +1,236 @@
+### OrderAPI HTTP Requests
+
+@baseUrl = http://localhost:5000/api
+
+# SEED DATA - VALID POST REQUESTS (Use these to populate database)
+
+### SEED: Laptop Order - Basic
+POST {{baseUrl}}/orders
+Content-Type: application/json
+
+{
+  "customerName": "John Doe",
+  "amount": 1299.99,
+  "status": "Pending",
+  "description": "Dell XPS 15 Laptop"
+}
+
+### SEED: Office Chair - Complete Order
+POST {{baseUrl}}/orders
+Content-Type: application/json
+
+{
+  "customerName": "Jane Smith",
+  "amount": 249.50,
+  "status": "Pending",
+  "description": "Herman Miller Ergonomic Office Chair"
+}
+
+### SEED: Monitor Bundle - Standard Order
+POST {{baseUrl}}/orders
+Content-Type: application/json
+
+{
+  "customerName": "Robert Johnson",
+  "amount": 549.99,
+  "status": "Pending",
+  "description": "Dual 4K Monitor Setup with stands"
+}
+
+### SEED: Keyboard & Mouse - Small Order
+POST {{baseUrl}}/orders
+Content-Type: application/json
+
+{
+  "customerName": "Emily Wilson",
+  "amount": 89.99,
+  "status": "Pending",
+  "description": "Mechanical Keyboard + Wireless Mouse Combo"
+}
+
+### SEED: Desk - Large Order
+POST {{baseUrl}}/orders
+Content-Type: application/json
+
+{
+  "customerName": "Michael Brown",
+  "amount": 799.00,
+  "status": "Pending",
+  "description": "Standing Desk with Electric Motor"
+}
+
+### SEED: Laptop Stand - Budget Order
+POST {{baseUrl}}/orders
+Content-Type: application/json
+
+{
+  "customerName": "Sarah Davis",
+  "amount": 29.99,
+  "status": "Pending",
+  "description": "Adjustable Aluminum Laptop Stand"
+}
+
+### SEED: Complete Workstation - Maximum Order
+POST {{baseUrl}}/orders
+Content-Type: application/json
+
+{
+  "customerName": "David Martinez",
+  "amount": 3499.00,
+  "status": "Pending",
+  "description": "Complete home office setup: desk, chair, monitors, peripherals"
+}
+
+### SEED: Webcam - Minimum Amount Order
+POST {{baseUrl}}/orders
+Content-Type: application/json
+
+{
+  "customerName": "Lisa Anderson",
+  "amount": 0.01,
+  "status": "Pending",
+  "description": "HD Webcam with Microphone"
+}
+
+### SEED: Bulk Order - Corporate
+POST {{baseUrl}}/orders
+Content-Type: application/json
+
+{
+  "customerName": "Acme Corporation",
+  "amount": 15999.99,
+  "status": "Pending",
+  "description": "Bulk order for 20 employee workstations"
+}
+
+### SEED: No Description Order
+POST {{baseUrl}}/orders
+Content-Type: application/json
+
+{
+  "customerName": "James Taylor",
+  "amount": 199.99,
+  "status": "Pending"
+}
+
+################################################################################
+# TEST REQUESTS - GET OPERATIONS
+################################################################################
+
+### Get all orders
+GET {{baseUrl}}/orders
+Content-Type: application/json
+
+### Get single order
+GET {{baseUrl}}/orders/1
+Content-Type: application/json
+
+### Get order #2
+GET {{baseUrl}}/orders/2
+Content-Type: application/json
+
+################################################################################
+# TEST REQUESTS - VALIDATION ERRORS (These should fail)
+################################################################################
+
+### FAIL: Negative amount
+POST {{baseUrl}}/orders
+Content-Type: application/json
+
+{
+  "customerName": "Invalid Order",
+  "amount": -50
+}
+
+### FAIL: Zero amount
+POST {{baseUrl}}/orders
+Content-Type: application/json
+
+{
+  "customerName": "Invalid Order",
+  "amount": 0
+}
+
+### FAIL: Empty customer name
+POST {{baseUrl}}/orders
+Content-Type: application/json
+
+{
+  "customerName": "",
+  "amount": 99.99
+}
+
+### FAIL: Null customer name
+POST {{baseUrl}}/orders
+Content-Type: application/json
+
+{
+  "customerName": null,
+  "amount": 99.99
+}
+
+################################################################################
+# TEST REQUESTS - UPDATE OPERATIONS (PUT)
+################################################################################
+
+### UPDATE: Mark order as Completed
+PUT {{baseUrl}}/orders/1
+Content-Type: application/json
+
+{
+  "status": "Completed"
+}
+
+### UPDATE: Mark order as Cancelled
+PUT {{baseUrl}}/orders/2
+Content-Type: application/json
+
+{
+  "status": "Cancelled"
+}
+
+### UPDATE: Mark order back to Pending
+PUT {{baseUrl}}/orders/3
+Content-Type: application/json
+
+{
+  "status": "Pending"
+}
+
+################################################################################
+# TEST REQUESTS - DELETE OPERATIONS
+################################################################################
+
+### DELETE: Remove order by ID
+DELETE {{baseUrl}}/orders/5
+Content-Type: application/json
+
+################################################################################
+# ERROR HANDLING - NOT FOUND (404)
+################################################################################
+
+### ERROR: Try to get non-existent order
+GET {{baseUrl}}/orders/999
+Content-Type: application/json
+
+### ERROR: Try to update non-existent order
+PUT {{baseUrl}}/orders/999
+Content-Type: application/json
+
+{
+  "status": "Completed"
+}
+
+### ERROR: Try to delete non-existent order
+DELETE {{baseUrl}}/orders/999
+Content-Type: application/json
+
+################################################################################
+# QUICK TEST SEQUENCE
+################################################################################
+# 1. Run all SEED requests first to populate database
+# 2. Run GET all orders to see data
+# 3. Run UPDATE requests to change status
+# 4. Run DELETE to remove an order
+# 5. Run ERROR requests to test validation
+################################################################################

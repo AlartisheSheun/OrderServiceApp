@@ -1,0 +1,39 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+*.sln
+.vs/
+.vscode/
+
+# Git
+.git
+.gitignore
+
+# node_modules
+node_modules/
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Build outputs
+dist/
+build/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Documentation
+*.md
+docs/
+
+# Misc
+.editorconfig
+.prettierrc
+Makefile
+*.yml
+!render.yaml

@@ -1,0 +1,46 @@
+services:
+  - type: web
+    name: OrderAPI
+    runtime: dotnet
+    runtimeVersion: 8.0.0
+    region: oregon
+    plan: standard
+    
+    buildCommand: |
+      dotnet build -c Release
+      dotnet publish -c Release -o out
+    
+    startCommand: dotnet out/OrderAPI.dll
+    
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: ASPNETCORE_URLS
+        value: http://+:10000
+      - key: DB_HOST
+        fromDatabase:
+          name: orderdb
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: orderdb
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: orderdb
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: orderdb
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: orderdb
+          property: password
+
+databases:
+  - name: orderdb
+    databaseName: OrderDb
+    user: dbuser
+    plan: standard
+    region: oregon
