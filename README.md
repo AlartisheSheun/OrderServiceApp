@@ -52,7 +52,7 @@ dotnet restore
 cp .env.example .env
 
 # Edit .env with your database details
-# (For local development, defaults usually work)
+# (For local development, defaults will work)
 ```
 
 **Default local configuration** (in `.env`):

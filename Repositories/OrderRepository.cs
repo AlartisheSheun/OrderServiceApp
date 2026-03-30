@@ -22,7 +22,7 @@ public class OrderRepository : IOrderRepository
     {
         _context = context;
     }
-    
+
     // <inheritdoc />
     public async Task<IEnumerable<Order>> GetAllOrdersAsync()
     {

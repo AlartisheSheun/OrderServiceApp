@@ -24,3 +24,31 @@ public class OrderResponseDto
     public string Status { get; set; } = string.Empty;
     public DateTime CreatedAt { get; set; }
 }
+
+// Generic API response wrapper
+public class ApiResponse<T>
+{
+    public T? Data { get; set; }
+    public string Message { get; set; } = string.Empty;
+    public bool Success { get; set; }
+
+    public static ApiResponse<T> SuccessResponse(T? data, string message = "Success")
+    {
+        return new ApiResponse<T>
+        {
+            Data = data,
+            Message = message,
+            Success = true
+        };
+    }
+
+    public static ApiResponse<T> ErrorResponse(string message, T? data = default)
+    {
+        return new ApiResponse<T>
+        {
+            Data = data,
+            Message = message,
+            Success = false
+        };
+    }
+}
